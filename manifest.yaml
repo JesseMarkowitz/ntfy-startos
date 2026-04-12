@@ -1,0 +1,113 @@
+id: ntfy
+title: NTFY
+version: 2.19.2
+release-notes: |
+  * Initial StartOS 0.3.5 release of NTFY
+license: Apache-2.0
+wrapper-repo: "https://github.com/JesseMarkowitz/ntfy-startos"
+upstream-repo: "https://github.com/binwiederhier/ntfy"
+support-site: "https://github.com/binwiederhier/ntfy/issues"
+marketing-site: "https://ntfy.sh/"
+donation-url: "https://github.com/sponsors/binwiederhier"
+build: ["make"]
+description:
+  short: Send push notifications to your phone or desktop via HTTP PUT/POST
+  long: |
+    ntfy (pronounced "notify") is a simple HTTP-based pub-sub notification
+    service. It allows you to send notifications to your phone or desktop via
+    scripts from any computer, and/or using a REST API. It's entirely free
+    software, open source, and very lightweight.
+assets:
+  license: LICENSE
+  icon: icon.png
+  instructions: instructions.md
+main:
+  type: docker
+  image: main
+  entrypoint: "docker_entrypoint.sh"
+  args: []
+  mounts:
+    main: /data
+health-checks:
+  web:
+    name: Web Interface
+    success-message: The NTFY web interface is ready
+    type: docker
+    image: main
+    entrypoint: "check-web.sh"
+    args: []
+    io-format: json
+    inject: true
+config:
+  get:
+    type: script
+  set:
+    type: script
+properties: ~
+volumes:
+  main:
+    type: data
+interfaces:
+  main:
+    name: Web Interface
+    description: The main web interface for NTFY
+    tor-config:
+      port-mapping:
+        80: "80"
+    lan-config:
+      443:
+        ssl: true
+        internal: 80
+    ui: true
+    protocols:
+      - tcp
+      - http
+dependencies: {}
+alerts:
+  install: |
+    NTFY will be available on your Tor address and LAN (HTTPS).
+    Configure signup, attachment limits, and log level in the service config.
+  uninstall: ~
+  restore: ~
+backup:
+  create:
+    type: docker
+    image: main
+    system: false
+    entrypoint: /bin/sh
+    args:
+      - -c
+      - "cp -a /data/. /mnt/backup/ 2>/dev/null || true"
+    mounts:
+      BACKUP: /mnt/backup
+      main: /data
+  restore:
+    type: docker
+    image: main
+    system: false
+    entrypoint: /bin/sh
+    args:
+      - -c
+      - "cp -a /mnt/backup/. /data/ 2>/dev/null || true"
+    mounts:
+      BACKUP: /mnt/backup
+      main: /data
+migrations:
+  from:
+    "*":
+      type: docker
+      image: main
+      entrypoint: /bin/sh
+      args: ["-c", "echo '{\"configured\": true}'"]
+      io-format: json
+      mounts:
+        main: /data
+  to:
+    "*":
+      type: docker
+      image: main
+      entrypoint: /bin/sh
+      args: ["-c", "echo '{\"configured\": true}'"]
+      io-format: json
+      mounts:
+        main: /data

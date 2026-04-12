@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.svg" alt="NTFY Logo" width="21%">
+  <img src="icon.png" alt="NTFY Logo" width="21%">
 </p>
 
 # NTFY on StartOS
