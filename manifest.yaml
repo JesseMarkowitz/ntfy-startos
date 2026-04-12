@@ -19,7 +19,7 @@ description:
     software, open source, and very lightweight.
 assets:
   license: LICENSE
-  icon: icon.svg
+  icon: icon.png
   instructions: instructions.md
 main:
   type: docker
