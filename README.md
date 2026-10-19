@@ -4,6 +4,15 @@
 
 # NTFY on StartOS
 
+> [!IMPORTANT]
+> **This repository is archived.** The official, maintained NTFY package for StartOS is
+> **<https://github.com/Start9Labs/ntfy-startos>**, published by Start9 and available in the
+> Start9 registry. It is a fork of this repository, kept current with upstream ntfy releases
+> and the latest StartOS SDK.
+>
+> Nothing here is maintained: the code targets a pre-release SDK and an old ntfy version, and
+> no issues or pull requests are accepted. Install or contribute at the Start9 repository instead.
+
 > **Upstream repo:** <https://github.com/binwiederhier/ntfy>
 > **Upstream docs:** <https://docs.ntfy.sh>
 
